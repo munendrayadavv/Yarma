@@ -13,13 +13,14 @@
         canvas { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
         .glass { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
         .font-mag { font-family: 'Syncopate', sans-serif; }
+        .section-active { display: block !important; animation: fadeIn 0.8s ease forwards; }
         .section-hidden { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         ::-webkit-scrollbar { display: none; }
-        .nav-link { position: relative; cursor: pointer; transition: all 0.3s; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background: #ff3e00; transition: width 0.3s; }
-        .nav-link:hover::after { width: 100%; }
-        .product-card { transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
-        .product-card:hover { transform: translateY(-10px); }
+        .nav-link { cursor: pointer; position: relative; transition: color 0.3s; }
+        .nav-link:hover { color: #ff3e00; }
+        .product-card { transition: all 0.5s ease; }
+        .product-card:hover { transform: translateY(-10px); border-color: #ff3e00; }
     </style>
 </head>
 <body>
@@ -28,14 +29,12 @@
 
     <nav class="fixed top-0 w-full z-[100] px-8 py-6 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/5">
         <div class="font-mag text-xl tracking-[0.5em] text-red-600 cursor-pointer" onclick="showSection('home')">YARMA</div>
-        
         <div class="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.3em] font-bold">
             <span class="nav-link" onclick="showSection('home')">Home</span>
             <span class="nav-link" onclick="showSection('shop')">Shop</span>
             <span class="nav-link" onclick="showSection('about')">About</span>
             <span class="nav-link" onclick="showSection('contact')">Contact</span>
         </div>
-
         <div class="flex gap-4 items-center">
             <a href="tel:8869089461" class="border border-white/10 p-2 rounded-full hover:bg-red-600 transition">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -49,10 +48,10 @@
         <p onclick="showSection('shop')" class="hover:text-red-600 cursor-pointer">Shop</p>
         <p onclick="showSection('about')" class="hover:text-red-600 cursor-pointer">About Us</p>
         <p onclick="showSection('contact')" class="hover:text-red-600 cursor-pointer">Contact</p>
-        <button onclick="toggleMenu()" class="text-xs text-gray-500 border border-white/10 px-6 py-2 rounded-full">CLOSE [X]</button>
+        <button onclick="toggleMenu()" class="text-xs text-gray-500 border border-white/10 px-6 py-2 rounded-full mt-10">CLOSE [X]</button>
     </div>
 
-    <section id="home-section" class="h-screen flex flex-col justify-center items-center text-center px-6">
+    <section id="home-section" class="h-screen flex flex-col justify-center items-center text-center px-6 section-active">
         <h1 class="font-mag text-5xl md:text-9xl tracking-tighter mb-4 italic">YARMA</h1>
         <p class="text-[10px] tracking-[1em] text-gray-500 mb-12 uppercase">Ishaan & Munendra Collective</p>
         <div class="flex flex-col md:flex-row gap-4">
@@ -63,18 +62,16 @@
 
     <section id="shop-section" class="section-hidden pt-32 px-6 pb-20 max-w-7xl mx-auto">
         <h2 class="font-mag text-center text-2xl mb-16 tracking-widest uppercase text-red-600">The Drop</h2>
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            </div>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </section>
 
     <section id="about-section" class="section-hidden pt-32 px-10 pb-20">
         <div class="max-w-4xl mx-auto glass p-12 md:p-20 rounded-[3rem] text-center border-t-2 border-red-600">
-            <h2 class="font-mag text-2xl mb-10 italic uppercase">The Vision</h2>
-            <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-400 mb-10">
+            <h2 class="font-mag text-2xl mb-10 italic uppercase text-red-600">The Vision</h2>
+            <p class="text-lg md:text-2xl font-light leading-relaxed text-gray-300 mb-10">
                 YARMA is a luxury streetwear label founded and executed by <span class="text-white font-bold">Ishaan</span> and <span class="text-white font-bold">Munendra</span>. 
-                Our pieces are designed for those who command respect without saying a word.
             </p>
-            <p class="text-[10px] tracking-[0.5em] text-red-500 uppercase font-black">Owned and Execute by Ishaan & Munendra</p>
+            <p class="text-[10px] tracking-[0.5em] text-red-500 uppercase font-black italic">Owned and Executed by Ishaan & Munendra</p>
         </div>
     </section>
 
@@ -84,27 +81,22 @@
             <div class="glass p-12 rounded-[3rem] text-center">
                 <p class="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">Founder</p>
                 <h3 class="text-3xl font-black italic mb-8">ISHAAN</h3>
-                <a href="tel:8869089461" class="inline-flex bg-red-600 p-6 rounded-full shadow-lg hover:scale-110 transition">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                </a>
+                <a href="tel:8869089461" class="inline-flex bg-red-600 p-6 rounded-full shadow-lg hover:scale-110 transition">Call Ishaan</a>
             </div>
             <div class="glass p-12 rounded-[3rem] text-center">
                 <p class="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">Founder</p>
                 <h3 class="text-3xl font-black italic mb-8">MUNENDRA</h3>
-                <a href="tel:8218415994" class="inline-flex bg-white p-6 rounded-full shadow-lg hover:scale-110 transition">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                </a>
+                <a href="tel:8218415994" class="inline-flex bg-white text-black p-6 rounded-full shadow-lg hover:scale-110 transition">Call Munendra</a>
             </div>
         </div>
     </section>
 
     <script>
-        // --- THREE.JS PREMIUM BACKGROUND ---
+        // Background Animation
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas3d'), alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-
         const particlesGeometry = new THREE.BufferGeometry();
         const count = 2000;
         const positions = new Float32Array(count * 3);
@@ -113,72 +105,45 @@
         const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, color: 0xffffff, transparent: true, opacity: 0.3 });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particles);
-
         camera.position.z = 5;
-        function animate() {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.0003;
-            renderer.render(scene, camera);
-        }
+        function animate() { requestAnimationFrame(animate); particles.rotation.y += 0.0003; renderer.render(scene, camera); }
         animate();
 
-        // --- MENU & SECTION LOGIC ---
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function showSection(id) {
-            // Hide all sections
-            document.querySelectorAll('section').forEach(s => s.classList.add('section-hidden'));
-            // Show target section
+        // Section Toggle Logic
+        window.showSection = function(id) {
+            document.querySelectorAll('section').forEach(s => {
+                s.classList.remove('section-active');
+                s.classList.add('section-hidden');
+            });
             const target = document.getElementById(id + '-section');
             if(target) {
                 target.classList.remove('section-hidden');
-                gsap.from(target, {opacity: 0, y: 30, duration: 0.8, ease: "power2.out"});
+                target.classList.add('section-active');
             }
-            // Close mobile menu if open
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0,0);
-        }
+        };
 
-        // --- PRODUCTS (21 Items) ---
+        window.toggleMenu = function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+
+        // Product Generation
         const products = [
             { name: "Vortex Hoodie", price: 5499, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600" },
             { name: "Stealth Tee", price: 2999, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600" },
-            { name: "Phantom Sneakers", price: 12499, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" },
-            { name: "Ghost Cargo", price: 6999, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600" },
-            { name: "Onyx Jacket", price: 8999, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600" },
-            { name: "Matrix Cap", price: 1499, img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600" },
-            { name: "Aura Belt", price: 1299, img: "https://images.unsplash.com/photo-1624222247344-550fb8ec5522?w=600" }
+            { name: "Phantom Sneakers", price: 12499, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" }
         ];
-        
-        const fullProducts = [...products, ...products, ...products]; // Creates 21 items
         const grid = document.getElementById('product-grid');
-        
-        fullProducts.forEach((p, i) => {
+        [...products, ...products, ...products].forEach(p => {
             grid.innerHTML += `
-                <div class="product-card glass p-5 rounded-[2.5rem]">
-                    <div class="overflow-hidden rounded-[2rem] h-80 mb-6 bg-black">
-                        <img src="${p.img}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition duration-700 hover:scale-110">
-                    </div>
+                <div class="product-card glass p-5 rounded-[2.5rem] border border-transparent">
+                    <div class="overflow-hidden rounded-[2rem] h-80 mb-6"><img src="${p.img}" class="w-full h-full object-cover"></div>
                     <div class="flex justify-between items-end px-2">
-                        <div>
-                            <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-1">YARMA Edition</p>
-                            <h3 class="font-bold text-sm tracking-widest uppercase">${p.name}</h3>
-                            <p class="text-red-500 font-black text-lg mt-1">₹${p.price.toLocaleString()}</p>
-                        </div>
-                        <button onclick="alert('Contact Ishaan/Munendra for order')" class="bg-white text-black px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-tighter">Buy</button>
+                        <div><h3 class="font-bold text-sm uppercase">${p.name}</h3><p class="text-red-500 font-black">₹${p.price}</p></div>
+                        <button onclick="window.location.href='tel:8869089461'" class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-bold">BUY</button>
                     </div>
-                </div>
-            `;
-        });
-
-        // Resize Fix
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+                </div>`;
         });
     </script>
 </body>
